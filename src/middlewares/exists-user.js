@@ -1,19 +1,28 @@
-const { request, response } = require("express");
-const { getUser } = require("../database/queries/account.queries");
+const { getUser, duplicated } = require("../database/queries/account.queries");
 
-// Verficar si ya existe una cuenta registrada con el usuario dado.
-const existsUser = async (req=request, res=response, next)=>{
-    const { usuario } = req.body;
-    console.log(req.body);
+// Verficar si ya existe una cuenta registrada con el usuario dado. Al crear una cuenta.
+const existsAccount = async (usuario)=>{
+    console.log(usuario);
     const cuenta = await getUser(usuario);
     if(cuenta) {
-        return res.status(400).json({ 
-            msg: "Ya existe una cuenta registrada"
-        })
+        throw new Error('La cuenta YA existe');
     }
-    next();
 }
 
+// Verficar si el usuario ya está registrado
+const userAlreadyRegistered = async (usuario)=>{
+    const cuenta = await getUser(usuario);
+    if(!cuenta)
+        throw new Error('El usuario no está registrado');
+}
+// Verifica si el usuario ya está asignado a algún paciente/administrador.
+const duplicatedUser = async (usuario)=>{
+    const user = await duplicated(usuario);
+    if(user)
+        throw new Error('La cuenta está en uso');
+} 
+
 module.exports = {
-    existsUser
+    existsAccount,
+    userAlreadyRegistered, duplicatedUser
 }

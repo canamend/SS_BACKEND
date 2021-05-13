@@ -11,7 +11,7 @@ const adminGet = (req=Req, res=Res)=>{
 
 const adminPost = async (req=Req, res=Res)=>{
     const { nombre, appaterno, apmaterno, genero, fnacimiento, usuario } = req.body;
-    
+    console.log(usuario);
     const response = await saveAdmin(nombre, appaterno, apmaterno, genero, fnacimiento, usuario);
     res.status(200).json({
         msg: response

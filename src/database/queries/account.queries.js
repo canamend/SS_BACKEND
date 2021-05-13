@@ -3,10 +3,9 @@ const mysqlConnection = require("../config.db");
 
 
 /**
- * Obtener un usuario de la base de datos.
- * @author Melquiades Bustamante <bonfil99melkia@gmail.com>
+ * Obtener una cuenta de la base de datos.
  * @param {string} usuario
- * @returns Promesa con el usuario si este existe, null en caso contrario.
+ * @returns Promesa con la cuenta si esta existe, null en caso contrario.
  * La promesa es rechazada en caso de un error interno.
  */
 const getUser = (usuario='')=>{
@@ -17,9 +16,19 @@ const getUser = (usuario='')=>{
             else resolve(row[0] || null);
         })
     });
+}
 
+const duplicated = (usuario='') => {
+    return new Promise( (resolve, reject)=>{
+        const query = "SELECT * from personas WHERE usuario=?";
+        mysqlConnection.query(query,[usuario], (err, row)=>{
+            if(err) reject(err);
+            else resolve(row[0] || null);
+        })
+    });
 }
 
 module.exports = {
-    getUser
+    getUser, 
+    duplicated
 }

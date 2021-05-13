@@ -1,13 +1,17 @@
 const router = require('express').Router();
-const { body } = require('express-validator');
+const { body, check } = require('express-validator');
 
 const validateFields = require('../middlewares/validate-fields');
 const { adminGet, adminPost } = require('../controllers/admin-controller');
+const { userAlreadyRegistered, duplicatedUser } = require('../middlewares/exists-user');
 
 
 router.get('/', adminGet);
 
 router.post('/',[
+    body('usuario', 'El usuario es requerido').exists(),
+    body('usuario').custom( userAlreadyRegistered ),
+    body('usuario').custom(duplicatedUser),
     body('nombre', 'El nombre es requerido').exists(),
     body('appaterno', 'El apellido paterno es requerido').exists(),
     body('apmaterno', 'El apellido materno es requerido').exists(),
