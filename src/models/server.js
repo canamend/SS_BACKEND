@@ -5,15 +5,14 @@ class Server {
     constructor(){
         this.app = express();
         this.port = process.env.PORT || 8080;
-        this.adminPath = '/admin';
-        this.accountPath = '/account';
         this.middleware();
         this.routes();
     }
 
     routes(){
-        this.app.use(this.adminPath, require('../routes/admin.route'));
-        this.app.use(this.accountPath, require('../routes/account.route'));
+        this.app.use('/account', require('../routes/account.route'));
+        this.app.use('/admin', require('../routes/admin.route'));
+        this.app.use('/patient', require('../routes/patient.route'));
     }
 
     middleware(){

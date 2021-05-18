@@ -28,7 +28,34 @@ const duplicated = (usuario='') => {
     });
 }
 
+/***
+ * Guardar una cuenta en la base de datos.
+ */
+const saveAccount = async (...data)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "INSERT INTO cuenta (usuario, contrasenia, rol) VALUES (?,?,?)";
+        mysqlConnection.query(query, data, (err, row)=>{
+            if(err) reject(err);
+            else resolve(row[0] || null);
+        })
+    });
+}
+
+/***
+ * Guardar una cuenta en la base de datos.
+ */
+const savePatient = async (...data)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "INSERT INTO cuenta (usuario, contrasenia, rol) VALUES (?,?,?)";
+        mysqlConnection.query(query, data, (err, row)=>{
+            if(err) reject(err);
+            else resolve(row[0] || null);
+        })
+    });
+}
+
 module.exports = {
     getUser, 
-    duplicated
+    duplicated, 
+    saveAccount
 }

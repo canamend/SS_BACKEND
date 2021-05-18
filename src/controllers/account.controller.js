@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 
-const { getUser } = require("../database/queries/account.queries");
+const { getUser, saveAccount } = require("../database/queries/account.queries");
 
 /**
  * Middleware que maneja una petición GET para obtener una cuenta de la base datos.
@@ -22,11 +22,17 @@ const accountGet = async (req, res)=>{
     }
 }
 
-const accountPost = (req, res)=>{
-    console.log(req.body);
-    res.status(200).json({
-        msg: 'account post xd'
-    });
+const accountPost = async (req, res)=>{
+
+    const { usuario, contrasenia, rol } = req.body;
+    try {
+        await saveAccount(usuario, contrasenia, rol);
+        res.json({
+            msg: 'Cuenta registrada :D'
+        })
+    } catch (error) {
+        res.status(500).json({ msg: error});
+    }
 }
 
 module.exports = {

@@ -1,25 +1,12 @@
 const router = require('express').Router();
-const { body, check } = require('express-validator');
 
-const validateFields = require('../middlewares/validate-fields');
 const { adminGet, adminPost } = require('../controllers/admin-controller');
-const { userAlreadyRegistered, duplicatedUser } = require('../middlewares/exists-user');
-
+const personalDataValidators = require('../middlewares/personal-data-validators');
 
 router.get('/', adminGet);
 
 router.post('/',[
-    body('usuario', 'El usuario es requerido').exists(),
-    body('usuario').custom( userAlreadyRegistered ),
-    body('usuario').custom(duplicatedUser),
-    body('nombre', 'El nombre es requerido').exists(),
-    body('appaterno', 'El apellido paterno es requerido').exists(),
-    body('apmaterno', 'El apellido materno es requerido').exists(),
-    body('genero','El genero es requerido').exists(),
-    body('genero','El genero debe tener uno de los siguientes valores [M, F]').isIn(['M', 'F']),
-    body('fnacimiento', 'La fecha de nacimiento es requerida').exists(),
-    body('fnacimiento','Formato de fecha incorrecto').isDate(),
-    validateFields
+    ...personalDataValidators
 ], adminPost);
 
 module.exports = router;
