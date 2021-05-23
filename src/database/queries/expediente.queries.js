@@ -9,6 +9,19 @@ const getExpediente = (no_expediente)=>{
     });
 }
 
+const saveExpediente = async (...data)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "INSERT INTO expediente(no_expediente, id_admin, disponible) VALUES(?,?,?)";
+        mysqlConnection.query(query, data, (err, row)=>{
+            if(err) reject(err);
+            else {
+                resolve('Expediente registrado con exito');
+            }
+        })
+    });
+}
+
 module.exports = {
-    getExpediente
+    getExpediente,
+    saveExpediente
 }

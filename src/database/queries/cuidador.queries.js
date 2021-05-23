@@ -10,6 +10,19 @@ const getCuidador = (id_cuidador)=>{
     });
 }
 
+const saveCuidador = async (...data)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "INSERT INTO cuidador (nombre_completo, parentesco, genero, telefono) VALUES (?,?,?,?)";
+        mysqlConnection.query(query, data, (err, row)=>{
+            if(err) reject(err);
+            else {
+                resolve(row.insertId);
+            }
+        })
+    });
+}
+
 module.exports = {
-    getCuidador
+    getCuidador,
+    saveCuidador
 }

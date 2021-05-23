@@ -13,6 +13,8 @@ class Server {
         this.app.use('/account', require('../routes/account.route'));
         this.app.use('/admin', require('../routes/admin.route'));
         this.app.use('/patient', require('../routes/patient.route'));
+        this.app.use('/cuidador', require('../routes/cuidador.route'));
+        this.app.use('/expediente', require('../routes/expediente.route'));
     }
 
     middleware(){
