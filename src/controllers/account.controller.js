@@ -1,6 +1,7 @@
 const { response, request } = require('express');
-
+const jwt = require('jsonwebtoken');
 const { getUser, saveAccount } = require("../database/queries/account.queries");
+const { generateJWT } = require('../helpers/jsonwebtoken');
 
 /**
  * Middleware que maneja una petición GET para obtener una cuenta de la base datos.
@@ -11,7 +12,6 @@ const { getUser, saveAccount } = require("../database/queries/account.queries");
 const accountGet = async (req, res)=>{
     const { usuario } = req.params;
     try {
-        getUser()
         const user = await getUser(usuario);
         res.status(200).json(user)
 
@@ -35,7 +35,31 @@ const accountPost = async (req, res)=>{
     }
 }
 
+const login = async (req=request, res=response)=>{
+    const { usuario, contrasenia } = req.body;
+    try{
+        const user = await getUser(usuario);
+        if(!user){
+            return res.status(400).json({ msg: 'Usuario no registrado'})
+        }
+        const { rol } = user;
+        if(contrasenia != user.contrasenia){
+            return res.status(400).json({ msg: 'La contraseña es incorrecta'})
+        }
+        const token = await generateJWT(usuario);
+
+        res.status(200).json({
+            rol,
+            usuario,
+            token
+        })
+    }catch(error){
+        res.status(500).json({ msg: error })
+    }
+}
+
 module.exports = {
     accountGet,
-    accountPost
+    accountPost,
+    login
 }

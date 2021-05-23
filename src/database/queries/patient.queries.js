@@ -9,8 +9,17 @@ const savePatient = (...patientData)=>{
         });
     });
 } 
-
+const getUser = ( user)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "SELECT * from paciente WHERE usuario=?";
+        mysqlConnection.query(query, [user], (err, row)=>{
+            if(err) reject(err)
+            else resolve(row[0] || null)
+        });
+    });
+} 
 
 module.exports = {
-    savePatient
+    savePatient,
+    getUser
 }

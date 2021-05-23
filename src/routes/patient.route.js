@@ -1,10 +1,15 @@
 const router = require('express').Router();
 
 const { body } = require('express-validator');
-const { patientPost } = require('../controllers/patient.controller');
+const { patientPost, patientGet } = require('../controllers/patient.controller');
 const { existsCuidador } = require('../middlewares/exists-cuidador');
 const { existsExpediente } = require('../middlewares/exists-expediente');
 const personalDataValidators = require('../middlewares/personal-data-validators');
+const { validateToken } = require('../middlewares/validate-token');
+
+router.get('/', [
+    validateToken
+], patientGet)
 
 router.post('/',[
     body('no_expediente','Debe proporcionar el expediente del paciente.').exists(),

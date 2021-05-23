@@ -1,6 +1,15 @@
 const { request, response } = require("express");
-const { savePatient } = require("../database/queries/patient.queries");
+const { savePatient, getUser } = require("../database/queries/patient.queries");
 
+const patientGet = async (req= request, res=response)=>{
+    try {
+        const { user='' } = req;
+        const patient = await getUser(user);
+        res.json(patient)
+    } catch (error) {
+        res.status(500).json({ msg: error})
+    }
+}
 
 const patientPost = async (req=request, res=response)=>{
     const { nombre, appaterno, apmaterno, genero, fnacimiento, usuario, id_cuidador, no_expediente } = req.body;
@@ -17,5 +26,6 @@ const patientPost = async (req=request, res=response)=>{
 }
 
 module.exports = {
+    patientGet,
     patientPost   
 }
