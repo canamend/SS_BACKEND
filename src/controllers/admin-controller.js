@@ -1,12 +1,16 @@
 const Req = require('express').request;
 const Res = require('express').response;
 
-const { saveAdmin } = require('../database/queries/admin.queries');
+const { saveAdmin, getAdmin } = require('../database/queries/admin.queries');
 
-const adminGet = (req=Req, res=Res)=>{
-    res.json({
-      method: 'GET',
-    })
+const adminGet = async (req=Req, res=Res)=>{
+    try {
+        const { user='' } = req;
+        const admin = await getAdmin(user);
+        res.json(admin)
+    } catch (error) {
+        res.status(500).json({ msg: error})
+    }
 }
 
 const adminPost = async (req=Req, res=Res)=>{

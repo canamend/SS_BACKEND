@@ -1,6 +1,16 @@
 const { request, response } = require("express");
-const { saveCuidador } = require("../database/queries/cuidador.queries");
+const { saveCuidador, getCuidador } = require("../database/queries/cuidador.queries");
 
+const cuidadorGet = async (req=request, res=response)=>{
+    const { id_cuidador } = req.params;
+
+    try{
+        const responseQuery = await getCuidador(id_cuidador);
+        res.json({ msg: responseQuery});
+    }catch(error){
+        res.status(500).json({msg: error})
+    }
+};
 
 const cuidadorPost = async (req=request, res=response)=>{
     const { nombre, parentesco, genero, telefono } = req.body;
@@ -15,5 +25,6 @@ const cuidadorPost = async (req=request, res=response)=>{
 }
 
 module.exports={
-    cuidadorPost
+    cuidadorPost,
+    cuidadorGet
 }

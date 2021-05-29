@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const validateToken = (req=request, res=response, next)=>{
     const { authorization } = req.headers;
     if(!authorization){
-        res.status(401).json({ msg: 'Acceso denegado' });
+        return res.status(401).json({ msg: 'Acceso denegado' });
     }
     try {
         const token = authorization.replace('Bearer ','');

@@ -9,7 +9,8 @@ const savePatient = (...patientData)=>{
         });
     });
 } 
-const getUser = ( user)=>{
+
+const getPatient = ( user)=>{
     return new Promise( (resolve, reject)=>{
         const query = "SELECT * from paciente WHERE usuario=?";
         mysqlConnection.query(query, [user], (err, row)=>{
@@ -19,7 +20,18 @@ const getUser = ( user)=>{
     });
 } 
 
+const getPatients = ()=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "SELECT * FROM paciente";
+        mysqlConnection.query(query, (err, row)=>{
+            if(err) reject(err)
+            else resolve(row)
+        });
+    });
+} 
+
 module.exports = {
     savePatient,
-    getUser
+    getPatient,
+    getPatients
 }

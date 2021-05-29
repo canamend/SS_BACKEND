@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 require('dotenv').config()
 
 class Server {
@@ -16,14 +17,21 @@ class Server {
         this.app.use('/patient', require('../routes/patient.route'));
         this.app.use('/cuidador', require('../routes/cuidador.route'));
         this.app.use('/expediente', require('../routes/expediente.route'));
+        this.app.get('', (req, res)=>{
+            res.json({
+                msg: 'WELCOME!'
+            })
+        })
     }
 
     middleware(){
+        this.app.use(cors())
         this.app.use( express.json() );
     }
     start(){
-        this.app.listen(this.port, ()=>{
+        this.app.listen(this.port,'0.0.0.0', ()=>{
             console.log('Server listening at port', this.port);
+            console.log(process.env)
         });
     }
 }

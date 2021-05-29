@@ -1,13 +1,24 @@
 const { request, response } = require("express");
-const { savePatient, getUser } = require("../database/queries/patient.queries");
+const { savePatient, getPatient, getPatients } = require("../database/queries/patient.queries");
 
 const patientGet = async (req= request, res=response)=>{
     try {
         const { user='' } = req;
-        const patient = await getUser(user);
+        const patient = await getPatient(user);
         res.json(patient)
     } catch (error) {
         res.status(500).json({ msg: error})
+    }
+}
+
+const patientsGet = async (req= request, res=response)=>{
+    try{
+        const patients = await getPatients();
+        res.json(patients)
+    }catch(error){
+        res.status(500).json({
+            msg: error
+        })
     }
 }
 
@@ -27,5 +38,6 @@ const patientPost = async (req=request, res=response)=>{
 
 module.exports = {
     patientGet,
-    patientPost   
+    patientsGet,
+    patientPost
 }
