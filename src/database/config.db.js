@@ -1,11 +1,17 @@
 const mysql = require('mysql');
 
 const connectionConfig = {
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'ss_hospital'
+  host     : 'mysql-fcc-buap-md.alwaysdata.net',
+  user     : '237098',
+  password : '237098201748133M',
+  database : 'fcc-buap-md_ss'
 };
+// const connectionConfig = {
+//   host     : 'localhost',
+//   user     : 'root',
+//   password : '',
+//   database : 'ss_hospital'
+// };
 
 
 

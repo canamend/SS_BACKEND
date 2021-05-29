@@ -29,9 +29,8 @@ class Server {
         this.app.use( express.json() );
     }
     start(){
-        this.app.listen(this.port,'0.0.0.0', ()=>{
+        this.app.listen(this.port, ()=>{
             console.log('Server listening at port', this.port);
-            console.log(process.env)
         });
     }
 }
