@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const connectionConfig = {
   host     : 'mysql-fcc-buap-md.alwaysdata.net',
   user     : '237098',
-  password : '237098201748133M',
+  password : '237098201748133',
   database : 'fcc-buap-md_ss'
 };
 // const connectionConfig = {
