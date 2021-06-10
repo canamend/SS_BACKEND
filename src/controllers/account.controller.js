@@ -46,12 +46,14 @@ const login = async (req=request, res=response)=>{
         if(contrasenia != user.contrasenia){
             return res.status(400).json({ msg: 'La contraseña es incorrecta'})
         }
-        const token = await generateJWT(usuario);
+        // Get token and expiration.
+        const {token, exp} = await generateJWT(usuario);
+        // console.log('Expire at', exp)
 
         res.status(200).json({
             rol,
-            usuario,
-            token
+            token,
+            expiresAt: exp
         })
     }catch(error){
         res.status(500).json({ msg: error })

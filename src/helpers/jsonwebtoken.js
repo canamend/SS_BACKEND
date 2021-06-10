@@ -7,7 +7,11 @@ const generateJWT = (usuario='')=>{
             expiresIn: '4h'
         }, (err, token)=>{  
             if(err) reject("Couldn't generate token")
-            else resolve(token);
+            else {
+                // Obtener la expiración
+                const {exp} = jwt.decode(token);
+                resolve({token, exp})
+            };
         });
     });
 }   
