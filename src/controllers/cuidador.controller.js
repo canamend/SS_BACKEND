@@ -6,7 +6,10 @@ const cuidadorGet = async (req=request, res=response)=>{
 
     try{
         const responseQuery = await getCuidador(id_cuidador);
-        res.json({ msg: responseQuery});
+        if(!responseQuery) return res.status(404).json({
+            msg: 'Carer not found'
+        })
+        res.json(responseQuery);
     }catch(error){
         res.status(500).json({msg: error})
     }
@@ -14,7 +17,6 @@ const cuidadorGet = async (req=request, res=response)=>{
 
 const cuidadorPost = async (req=request, res=response)=>{
     const { nombre, parentesco, genero, telefono } = req.body;
-    // console.log(nombre, parentesco, genero, telefono);
 
     try {
         const responseQuery = await saveCuidador(nombre, parentesco, genero, telefono)

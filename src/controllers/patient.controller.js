@@ -1,16 +1,30 @@
-const { request, response } = require("express");
+const { request, response, json } = require("express");
 const { savePatient, getPatient, getPatients } = require("../database/queries/patient.queries");
 
+// Obtener la información de un paciente. 
+// Si se proporciona el nombre del usuario en los parámetros se realiza la búsqueda con base en dicho valor,
+// en caso contrario, se toma el nombre de usuario del token
 const patientGet = async (req= request, res=response)=>{
     try {
         const { user='' } = req;
-        const patient = await getPatient(user);
+        let { username } = req.params;
+        
+        // Si no existe el nombre de usuario en los parámetros, tomar el nombre de usuario del token.
+        if(!username){
+            username = user;
+        }
+        const patient = await getPatient(username);
+
+        if(!patient) return res.status(404).json({
+            msg: 'Patient not found'
+        });
+
         res.json(patient)
     } catch (error) {
         res.status(500).json({ msg: error})
     }
 }
-
+// const patientGetWithoutPermision;
 const patientsGet = async (req= request, res=response)=>{
     try{
         const patients = await getPatients();
