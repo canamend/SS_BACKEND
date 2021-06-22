@@ -17,14 +17,13 @@ class Server {
         this.app.use('/patient', require('../routes/patient.route'));
         this.app.use('/cuidador', require('../routes/cuidador.route'));
         this.app.use('/expediente', require('../routes/expediente.route'));
-        this.app.get('', (req, res)=>{
-            res.json({
-                msg: 'WELCOME!'
-            })
+        this.app.get('*', (req, res)=>{
+            res.sendFile( process.env.PWD + '/public/index.html')
         })
     }
 
     middleware(){
+        this.app.use( express.static('public'))
         this.app.use(cors())
         this.app.use( express.json() );
     }
