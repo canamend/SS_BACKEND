@@ -6,7 +6,7 @@ const { existsAccount } = require('../middlewares/exists-user');
 const validateFields = require('../middlewares/validate-fields');
 
 const router = Router();
-
+// localhost:8080/account
 router.get('/:usuario*?',[
     check('usuario', 'El nombre de usuario es requerido').exists(),
     validateFields

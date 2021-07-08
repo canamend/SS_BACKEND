@@ -14,7 +14,6 @@ const accountGet = async (req, res)=>{
     try {
         const user = await getUser(usuario);
         res.status(200).json(user)
-
     } catch (error) {
         res.status(500).json({
             msg: "Ocurrió un error al procesar la consulta"
@@ -46,6 +45,7 @@ const login = async (req=request, res=response)=>{
         if(contrasenia != user.contrasenia){
             return res.status(400).json({ msg: 'La contraseña es incorrecta'})
         }
+        
         // Get token and expiration.
         const {token, exp} = await generateJWT(usuario);
         // console.log('Expire at', exp)

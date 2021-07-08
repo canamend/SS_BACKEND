@@ -1,4 +1,4 @@
-const { request, response, json } = require("express");
+const { request, response } = require("express");
 const { savePatient, getPatient, getPatients } = require("../database/queries/patient.queries");
 
 // Obtener la información de un paciente. 

@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors')
-require('dotenv').config()
+require('dotenv').config();
 
 class Server {
 
@@ -17,6 +17,7 @@ class Server {
         this.app.use('/patient', require('../routes/patient.route'));
         this.app.use('/cuidador', require('../routes/cuidador.route'));
         this.app.use('/expediente', require('../routes/expediente.route'));
+        this.app.use('/test', require('../routes/test.route'));
         this.app.get('*', (req, res)=>{
             res.sendFile( process.env.PWD + '/public/index.html')
         })
