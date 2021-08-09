@@ -18,6 +18,7 @@ class Server {
         this.app.use('/cuidador', require('../routes/cuidador.route'));
         this.app.use('/expediente', require('../routes/expediente.route'));
         this.app.use('/test', require('../routes/test.route'));
+        this.app.use('/historial', require('../routes/historial.route'));
         this.app.get('*', (req, res)=>{
             res.sendFile( process.env.PWD + '/public/index.html')
         })
