@@ -1,8 +1,9 @@
 const { Router } = require('express');
+const { check } = require('express-validator');
 const { body } = require('express-validator');
 const { historialPost, historialGet } = require('../controllers/historial.controller');
+
 const validateFields = require('../middlewares/validate-fields');
-const { validateToken } = require('../middlewares/validate-token');
 
 
 const router = Router();
@@ -15,13 +16,10 @@ router.post('/', [
     validateFields
 ], historialPost);
 
-/**
- * @param username opcional
- * Si el que está haciendo la petición es un paciente, no es necesario ya que viene en el token.
- * Pero si es otro tipo de usuario, se debe proporcionar dicho valor en los parámetros
- */
- router.get('/:username*?', [
-    validateToken
+
+ router.get('/:id_paciente*?',[
+    check('id_paciente', 'El número de paciente es requerido').exists(),
+    validateFields
 ], historialGet);
 
 module.exports = router;

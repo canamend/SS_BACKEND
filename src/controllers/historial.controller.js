@@ -1,5 +1,5 @@
 const { request, response } = require("express");
-const { saveHistorial } = require("../database/queries/Historial.queries");
+const { saveHistorial, getHistorial } = require("../database/queries/Historial.queries");
 
 
 const historialPost = async (req=request, res=response )=>{
@@ -14,14 +14,14 @@ const historialPost = async (req=request, res=response )=>{
 
 const historialGet = async (req=request, res=response)=>{
     try {
-        const { user='' } = req;
-        let { username } = req.params;
+        //const { id_user='' } = req;
+        let { id_user } = req.params;
         
         // Si no existe el nombre de usuario en los parámetros, tomar el nombre de usuario del token.
-        if(!username){
-            username = user;
-        }
-        const patient = await getHistorial(username);
+        //if(!id_usuario){
+            //id_usuario = id_user;
+        //}
+        const patient = await getHistorial(id_user);
 
         if(!patient) return res.status(404).json({
             msg: 'Patient not found'

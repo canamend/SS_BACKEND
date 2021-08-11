@@ -1,14 +1,5 @@
 const mysqlConnection = require('../config.db');
 
-const getHistorial = (id_paciente)=>{
-    return new Promise( (resolve, reject)=>{
-        const query = "SELECT * FROM historial WHERE id_paciente=?";
-        mysqlConnection.query(query, [id_paciente], (err, result)=>{
-            if(err) reject(err)
-            else resolve(result[0] || null)
-        });
-    });
-} 
 
 const saveHistorial = async (...data)=>{
     return new Promise( (resolve, reject)=>{
@@ -22,6 +13,15 @@ const saveHistorial = async (...data)=>{
     });
 }
 
+const getHistorial = ( id_user)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "SELECT * FROM historial WHERE id_paciente=?";
+        mysqlConnection.query(query, [id_user], (err, row)=>{
+            if(err) reject(err)
+            else resolve(row[0] || null)
+        });
+    });
+} 
 
 module.exports = {
     getHistorial,
