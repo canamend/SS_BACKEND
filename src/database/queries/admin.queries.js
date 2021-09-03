@@ -10,6 +10,16 @@ const getAdmin = (usuario)=>{
     });
 }
 
+const getAdmins = ()=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "SELECT id_admin, nombre, ap_paterno FROM administrador";
+        mysqlConnection.query(query, (err, row)=>{
+            if(err) reject(err)
+            else resolve(row)
+        });
+    });
+} 
+
 const saveAdmin = (...adminData)=>{
     return new Promise( (resolve, reject)=>{
         const query = "INSERT INTO administrador (nombre, ap_paterno, ap_materno, genero, f_nacimiento, usuario) VALUES(?,?,?,?,?,?)";
@@ -24,5 +34,6 @@ const saveAdmin = (...adminData)=>{
 
 module.exports = {
     saveAdmin,
-    getAdmin
+    getAdmin,
+    getAdmins
 }

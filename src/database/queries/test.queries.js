@@ -11,6 +11,15 @@ const getTest = testId =>{
     });
 }
 
+const getTests = ()=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "SELECT * FROM test";
+        mysqlConnection.query(query, (err, row)=>{
+            if(err) reject(err)
+            else resolve(row)
+        });
+    });
+} 
 
 const getTestQuestions = testId =>{
     return new Promise( (resolve, reject)=>{
@@ -39,6 +48,7 @@ const getAnswers = (answersTypes=[]) =>{
 
 module.exports = {
     getTest,
+    getTests,
     getTestQuestions,
     getAnswers
 }

@@ -1,5 +1,5 @@
 const { request, response } = require("express");
-const { getTest, getTestQuestions, getAnswers } = require("../database/queries/test.queries");
+const { getTest, getTestQuestions, getAnswers, getTests } = require("../database/queries/test.queries");
 const testGet = async (req=request, res=response)=>{
     const { testid } = req.params;
     try {
@@ -46,6 +46,18 @@ const getAnswersObj = (answers=[])=>{
     return answersObj;
 }
 
+const testsGet = async (req= request, res=response)=>{
+    try{
+        const tests = await getTests();
+        res.json(tests)
+    }catch(error){
+        res.status(500).json({
+            msg: error
+        })
+    }
+}
+
 module.exports = {
-    testGet
+    testGet,
+    testsGet
 }

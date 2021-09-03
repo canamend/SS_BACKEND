@@ -1,12 +1,20 @@
-const { Router } = require('express');
+const router = require('express').Router();
+
 const { check } = require('express-validator');
 const { body } = require('express-validator');
-const { historialPost, historialGet } = require('../controllers/historial.controller');
+const { historialesGet, historialPost, historialGet, historialUpdate } = require('../controllers/historial.controller');
 
 const validateFields = require('../middlewares/validate-fields');
+const { validateToken } = require('../middlewares/validate-token');
 
+router.get('/all', [
+    validateToken
+], historialesGet);
 
-const router = Router();
+router.get('/:patientid*?',[
+    check('patientid', 'El número de paciente es requerido').exists(),
+    validateFields
+], historialGet);
 
 router.post('/', [
     body('id_test', 'El numero de test es requerido').exists(),
@@ -16,10 +24,9 @@ router.post('/', [
     validateFields
 ], historialPost);
 
-
- router.get('/:id_paciente*?',[
-    check('id_paciente', 'El número de paciente es requerido').exists(),
+router.post('/:historial_id*?', [
+    check('historial_id', 'El número de paciente es requerido').exists(), //borrar si causa problemas
     validateFields
-], historialGet);
+], historialUpdate);
 
 module.exports = router;
