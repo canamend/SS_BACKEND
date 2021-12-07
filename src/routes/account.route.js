@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { accountGet, accountPost, login } = require('../controllers/account.controller');
+const { accountGet, accountPost, login, accountDelete } = require('../controllers/account.controller');
 const { existsAccount } = require('../middlewares/exists-user');
 const validateFields = require('../middlewares/validate-fields');
 
@@ -11,6 +11,11 @@ router.get('/:usuario*?',[
     check('usuario', 'El nombre de usuario es requerido').exists(),
     validateFields
 ], accountGet);
+
+router.delete('/:username*?',[
+    check('username', 'El nombre de usuario es requerido').exists(),
+    validateFields
+], accountDelete);
 
 router.post('/login',[
     check('usuario', 'El usuario es requerido').exists(),

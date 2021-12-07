@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 const jwt = require('jsonwebtoken');
-const { getUser, saveAccount } = require("../database/queries/account.queries");
+const { getUser, saveAccount, deleteAccount } = require("../database/queries/account.queries");
 const { generateJWT } = require('../helpers/jsonwebtoken');
 
 /**
@@ -28,6 +28,19 @@ const accountPost = async (req, res)=>{
         await saveAccount(usuario, contrasenia, rol);
         res.json({
             msg: 'Cuenta registrada :D'
+        })
+    } catch (error) {
+        res.status(500).json({ msg: error});
+    }
+}
+
+const accountDelete = async (req, res)=>{
+
+    const { usuario } = req.body;
+    try {
+        await deleteAccount(usuario);
+        res.json({
+            msg: 'Cuenta borrada'
         })
     } catch (error) {
         res.status(500).json({ msg: error});
@@ -63,5 +76,6 @@ const login = async (req=request, res=response)=>{
 module.exports = {
     accountGet,
     accountPost,
+    accountDelete,
     login
 }

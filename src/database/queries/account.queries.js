@@ -18,6 +18,19 @@ const getUser = (usuario='')=>{
     });
 }
 
+/***
+ * borrar una cuenta en la base de datos.
+ */
+ const deleteAccount = async (...data)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "DELETE FROM cuenta WHERE usuario=?";
+        mysqlConnection.query(query, data, (err, row)=>{
+            if(err) reject(err);
+            else resolve(row[0] || null);
+        })
+    });
+}
+
 const duplicated = (usuario='') => {
     return new Promise( (resolve, reject)=>{
         const query = "SELECT * from personas WHERE usuario=?";
@@ -57,5 +70,6 @@ const savePatient = async (...data)=>{
 module.exports = {
     getUser, 
     duplicated, 
-    saveAccount
+    saveAccount,
+    deleteAccount
 }
