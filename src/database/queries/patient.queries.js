@@ -30,8 +30,22 @@ const getPatients = ()=>{
     });
 } 
 
+/***
+ * borrar un paciente en la base de datos.
+ */
+ const deleteAccountPatient = async (...data)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "DELETE FROM paciente WHERE id_paciente=?";
+        mysqlConnection.query(query, data, (err, row)=>{
+            if(err) reject(err);
+            else resolve(row[0] || null);
+        })
+    });
+}
+
 module.exports = {
     savePatient,
     getPatient,
-    getPatients
+    getPatients,
+    deleteAccountPatient
 }
