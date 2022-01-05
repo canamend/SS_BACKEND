@@ -1,4 +1,4 @@
-const { getUser, duplicated } = require("../database/queries/account.queries");
+const { getUser, duplicated,  } = require("../database/queries/account.queries");
 
 // Verficar si ya existe una cuenta registrada con el usuario dado. Al crear una cuenta.
 const existsAccount = async (usuario)=>{
@@ -6,6 +6,14 @@ const existsAccount = async (usuario)=>{
     const cuenta = await getUser(usuario);
     if(cuenta) {
         throw new Error('La cuenta YA existe');
+    }
+}
+
+const ableToDelete = async(usuario)=>{
+    console.log(usuario);
+    const cuenta = await getUser(usuario);
+    if(!cuenta) {
+        throw new Error('La cuenta no existe');
     }
 }
 
@@ -24,5 +32,6 @@ const duplicatedUser = async (usuario)=>{
 
 module.exports = {
     existsAccount,
-    userAlreadyRegistered, duplicatedUser
+    userAlreadyRegistered, duplicatedUser,
+    ableToDelete
 }

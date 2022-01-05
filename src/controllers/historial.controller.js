@@ -41,9 +41,9 @@ const historialPost = async (req=request, res=response )=>{
 }
 
 const historialUpdate = async (req=request, res=response )=>{
-    const { puntaje, fecha_fin, historial_id, patient_id } = req.body;
+    const { puntaje, fecha_fin, p1, p2, p3, p4, p5, p6, historial_id, patient_id} = req.body;
     try {
-        const responseQuery = await updateHistorial(puntaje, fecha_fin, historial_id, patient_id);
+        const responseQuery = await updateHistorial(puntaje, fecha_fin, p1, p2, p3, p4, p5, p6, historial_id, patient_id);
         res.json({ msg: responseQuery })
     } catch (error) {
         res.status(500).json({ msg: error})

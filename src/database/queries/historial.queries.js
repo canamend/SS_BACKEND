@@ -35,7 +35,7 @@ const saveHistorial = async (...data)=>{
 
 const updateHistorial = async (...data)=>{
     return new Promise( (resolve, reject)=>{
-        const query ="UPDATE historial SET puntaje=?, f_fin=? WHERE id_historial=? AND id_paciente=?";
+        const query ="UPDATE historial SET puntaje=?, f_fin=?, p1=?, p2=?, p3=?, p4=?, p5=?, p6=? WHERE id_historial=? AND id_paciente=?";
         mysqlConnection.query(query, data, (err, row)=>{
             if(err) reject(err);
             else {

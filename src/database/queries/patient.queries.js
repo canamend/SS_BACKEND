@@ -33,12 +33,12 @@ const getPatients = ()=>{
 /***
  * borrar un paciente en la base de datos.
  */
- const deleteAccountPatient = async (...data)=>{
+ const deletePatient = (username)=>{
     return new Promise( (resolve, reject)=>{
-        const query = "DELETE FROM paciente WHERE id_paciente=?";
-        mysqlConnection.query(query, data, (err, row)=>{
+        const query = "DELETE FROM paciente WHERE usuario=?";
+        mysqlConnection.query(query, [username], (err, row)=>{
             if(err) reject(err);
-            else resolve(row[0] || null);
+            else resolve(row[0] || null)
         })
     });
 }
@@ -47,5 +47,5 @@ module.exports = {
     savePatient,
     getPatient,
     getPatients,
-    deleteAccountPatient
+    deletePatient
 }

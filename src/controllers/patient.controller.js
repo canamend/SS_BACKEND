@@ -1,5 +1,5 @@
 const { request, response } = require("express");
-const { savePatient, getPatient, getPatients,deleteAccountPatient } = require("../database/queries/patient.queries");
+const { savePatient, getPatient, getPatients, deletePatient } = require("../database/queries/patient.queries");
 
 // Obtener la información de un paciente. 
 // Si se proporciona el nombre del usuario en los parámetros se realiza la búsqueda con base en dicho valor,
@@ -50,11 +50,12 @@ const patientPost = async (req=request, res=response)=>{
     }
 }
 
-const accountDeletePaciente = async (req, res)=>{
+const patientDelete = async (req=request, res=response)=>{
 
-    const { id_paciente } = req.body;
+    const { user='' } = req;
+    let { username } = req.params;
     try {
-        await deleteAccountPatient(id_paciente);
+        await deletePatient(username);
         res.json({
             msg: 'Cuenta borrada'
         })
@@ -67,5 +68,5 @@ module.exports = {
     patientGet,
     patientsGet,
     patientPost,
-    accountDeletePaciente
+    patientDelete
 }

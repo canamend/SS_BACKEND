@@ -1,11 +1,15 @@
 const router = require('express').Router();
+const { check } = require('express-validator');
 
 const { body } = require('express-validator');
-const { patientPost, patientGet, patientsGet,accountDeletePaciente } = require('../controllers/patient.controller');
+const { patientPost, patientGet, patientsGet, patientDelete } = require('../controllers/patient.controller');
 const { existsCuidador } = require('../middlewares/exists-cuidador');
 const { existsExpediente } = require('../middlewares/exists-expediente');
+const { ableToDelete } = require('../middlewares/exists-user');
 const personalDataValidators = require('../middlewares/personal-data-validators');
 const { validateToken } = require('../middlewares/validate-token');
+
+const validateFields = require('../middlewares/validate-fields');
 
 // Obtener todos los pacientes.
 router.get('/all', [
@@ -29,6 +33,9 @@ router.post('/',[
     ...personalDataValidators
 ], patientPost);
 
-router.delete('/:id*?', [
-], accountDeletePaciente);
+router.delete('/:username*?', [
+    check('username').custom(ableToDelete),
+    validateFields
+], patientDelete);
+
 module.exports = router;
