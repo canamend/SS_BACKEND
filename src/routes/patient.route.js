@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { body } = require('express-validator');
-const { patientPost, patientGet, patientsGet } = require('../controllers/patient.controller');
+const { patientPost, patientGet, patientsGet,accountDeletePaciente } = require('../controllers/patient.controller');
 const { existsCuidador } = require('../middlewares/exists-cuidador');
 const { existsExpediente } = require('../middlewares/exists-expediente');
 const personalDataValidators = require('../middlewares/personal-data-validators');
@@ -29,4 +29,6 @@ router.post('/',[
     ...personalDataValidators
 ], patientPost);
 
+router.delete('/:id*?', [
+], accountDeletePaciente);
 module.exports = router;

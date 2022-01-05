@@ -71,5 +71,6 @@ module.exports = {
     getUser, 
     duplicated, 
     saveAccount,
-    deleteAccount
+    deleteAccount,
+    savePatient
 }
