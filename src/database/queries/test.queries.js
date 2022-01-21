@@ -46,9 +46,31 @@ const getAnswers = (answersTypes=[]) =>{
     });
 }
 
+const saveTest = (...testData)=>{
+    return new Promise( (resolve, reject)=>{
+        const query = "INSERT INTO test (nombre, keyword, enfoque) VALUES(?,?,?)";
+        mysqlConnection.query(query, testData, (err, result)=>{
+            if(err) reject(err);
+            else resolve('Test guardado correctamente')
+        })
+    });
+}
+
+const saveQuestion = (... questionData)=>{
+    return new Promise( (resolve, reject)=>{
+        const query= "INSERT INTO preguntas (nombre, descripcion, puntos, id_test, tipo_respuestas, url_imagen, tipo_pregunta, factor) VALUES (?,?,?,?,?,?,?,?)"
+        mysqlConnection.query(query, questionData, (err, result)=>{
+            if(err) reject(err);
+            else resolve('Pregunta guardada correctamente')
+        })
+    });
+}
+
 module.exports = {
     getTest,
     getTests,
     getTestQuestions,
-    getAnswers
+    getAnswers,
+    saveTest,
+    saveQuestion
 }

@@ -1,5 +1,5 @@
 const { request, response } = require("express");
-const { getTest, getTestQuestions, getAnswers, getTests } = require("../database/queries/test.queries");
+const { getTest, getTestQuestions, getAnswers, getTests, saveTest, saveQuestion } = require("../database/queries/test.queries");
 const testGet = async (req=request, res=response)=>{
     const { testid } = req.params;
     try {
@@ -57,7 +57,45 @@ const testsGet = async (req= request, res=response)=>{
     }
 }
 
+const testPost = async (req=Req, res=Res)=>{
+    const { nombre, keyword, enfoque, questions } = req.body;
+    try{
+        const response = await saveTest( nombre, keyword, enfoque );
+    }catch(error){
+        res.status(500).json({
+            msg: error
+        })
+    }
+
+    
+    try{
+    questions.forEach( async question => {
+        const responseQ = await saveQuestion(
+            question.nombre,
+            question.descripcion,
+            question.puntos,
+            question.id_test,
+            question.tipo_respuestas,
+            question.url_imagen,
+            question.tipo_pregunta,
+            question.factor
+        );
+        
+    });
+    console.log("pasa");
+    res.status(200).json({
+        msg: responseQ
+    });
+    }catch(error2){
+        res.status(500).json({
+            msg: error2
+        })
+    }
+    
+}
+
 module.exports = {
     testGet,
-    testsGet
+    testsGet,
+    testPost
 }
