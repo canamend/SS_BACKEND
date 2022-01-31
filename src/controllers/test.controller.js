@@ -57,41 +57,40 @@ const testsGet = async (req= request, res=response)=>{
     }
 }
 
-const testPost = async (req=Req, res=Res)=>{
-    const { nombre, keyword, enfoque, questions } = req.body;
+const testPost = async (req=req, _res=Res)=>{
+    const { id_test, nombre, keyword, enfoque, } = req.body;
+    const  questions  = req.body.questions;
+
     try{
-        const response = await saveTest( nombre, keyword, enfoque );
+        const responseTest = await saveTest( id_test, nombre, keyword, enfoque );
+        const responseQuestions = savePreguntas(questions, id_test);
+    _res.json({
+        responseTest,
+        responseQuestions
+    });
     }catch(error){
-        res.status(500).json({
+        _res.status(500).json({
             msg: error
         })
     }
+}
 
-    
+const savePreguntas = async (questions, id_test)=>{
     try{
-    questions.forEach( async question => {
-        const responseQ = await saveQuestion(
-            question.nombre,
-            question.descripcion,
-            question.puntos,
-            question.id_test,
-            question.tipo_respuestas,
-            question.url_imagen,
-            question.tipo_pregunta,
-            question.factor
-        );
-        
-    });
-    console.log("pasa");
-    res.status(200).json({
-        msg: responseQ
-    });
-    }catch(error2){
-        res.status(500).json({
-            msg: error2
-        })
-    }
-    
+        questions.forEach( async question => {
+            const responseQuestions = await saveQuestion(
+                question.id_pregunta,
+                question.nombre,
+                question.descripcion,
+                id_test,
+                question.tipo_respuestas,
+                question.url_imagen,
+            );
+        });
+    }catch(error){
+        return error;
+    };
+
 }
 
 module.exports = {

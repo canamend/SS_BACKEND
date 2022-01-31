@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { param, check } = require('express-validator');
+const { param, check, body } = require('express-validator');
 
 const { testGet, testsGet, testPost } = require('../controllers/test.controller');
 const { existTest, containsPreguntas } = require('../middlewares/exists-test');
@@ -17,12 +17,13 @@ router.get('/:testid*?', [
     validateFields
 ], testGet);
 
-router.post('/',[
-    check('keyword', 'La palabra clave es requerida').exists(),
-    check('questions.*.nombre', 'El nombre es requerido').exists(),
-    check('questions.*.puntos', 'Los puntos son requeridos').exists(),
-    check('questions.*.factor', 'El factor es requerido').exists(),
-    validateFields
+router.post('/',[ 
+    body('id_test', 'El id del test es requerido').exists(),
+    body('nombre', 'El nombre del test es requerido').exists(),
+    body('keyword', 'La palabra clave del test es requerido').exists(),
+    body('enfoque', 'El enfoque del test es requerido').exists(),
+    body('questions.*.nombre', 'Las preguntas del test son requeridas').exists(),
+    validateFields 
 ], testPost);
 
 

@@ -10,8 +10,19 @@ const getTiposRespuestas = ()=>{
             else resolve(row)
         });
     });
-} 
+}
+
+const saveRespuesta = (... respuestaData)=>{
+    return new Promise( (resolve, reject)=>{
+        const query= "INSERT INTO respuestas (opcion, puntos, tipo_respuestas, url_imagen) VALUES (?,?,?,?)"
+        mysqlConnection.query(query, respuestaData, (err, result)=>{
+            if(err) reject(err);
+            else resolve('Respuesta guardada correctamente')
+        })
+    });
+}
 
 module.exports = {
-    getTiposRespuestas
+    getTiposRespuestas,
+    saveRespuesta
 }

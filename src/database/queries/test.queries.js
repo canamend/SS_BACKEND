@@ -48,7 +48,7 @@ const getAnswers = (answersTypes=[]) =>{
 
 const saveTest = (...testData)=>{
     return new Promise( (resolve, reject)=>{
-        const query = "INSERT INTO test (nombre, keyword, enfoque) VALUES(?,?,?)";
+        const query = "INSERT INTO test (id_test, nombre, keyword, enfoque) VALUES(?,?,?,?)";
         mysqlConnection.query(query, testData, (err, result)=>{
             if(err) reject(err);
             else resolve('Test guardado correctamente')
@@ -58,7 +58,7 @@ const saveTest = (...testData)=>{
 
 const saveQuestion = (... questionData)=>{
     return new Promise( (resolve, reject)=>{
-        const query= "INSERT INTO preguntas (nombre, descripcion, puntos, id_test, tipo_respuestas, url_imagen, tipo_pregunta, factor) VALUES (?,?,?,?,?,?,?,?)"
+        const query= "INSERT INTO preguntas (id_pregunta, nombre, descripcion, id_test, tipo_respuestas, url_imagen) VALUES (?,?,?,?,?,?)"
         mysqlConnection.query(query, questionData, (err, result)=>{
             if(err) reject(err);
             else resolve('Pregunta guardada correctamente')
