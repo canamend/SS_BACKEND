@@ -57,17 +57,33 @@ const testsGet = async (req= request, res=response)=>{
     }
 }
 
-const testPost = async (req=req, _res=Res)=>{
+const testPost = async (req=req, _res=_res)=>{
     const { id_test, nombre, keyword, enfoque, } = req.body;
     const  questions  = req.body.questions;
 
     try{
         const responseTest = await saveTest( id_test, nombre, keyword, enfoque );
-        const responseQuestions = savePreguntas(questions, id_test);
-    _res.json({
-        responseTest,
-        responseQuestions
-    });
+        _res.json(responseTest)
+
+        try{
+            questions.forEach( async pregunta => {
+                const response = await saveQuestion(
+                    pregunta.nombre,
+                    pregunta.descripcion,
+                    pregunta.id_test,
+                    pregunta.tipo_respuestas,
+                    pregunta.url_imagen
+                );
+                
+            });
+        }catch(error){
+            res.status(500).json({
+                msg: error
+            })
+        }
+        res.status(200).json({
+            msg: response
+        });
     }catch(error){
         _res.status(500).json({
             msg: error
@@ -75,26 +91,32 @@ const testPost = async (req=req, _res=Res)=>{
     }
 }
 
-const savePreguntas = async (questions, id_test)=>{
+const questionsPost = async (req=req, res=Res)=>{
+    const questions  = req.body; //req.body.respuestas
     try{
-        questions.forEach( async question => {
-            const responseQuestions = await saveQuestion(
-                question.id_pregunta,
-                question.nombre,
-                question.descripcion,
-                id_test,
-                question.tipo_respuestas,
-                question.url_imagen,
+        questions.forEach( async pregunta => {
+            const response = await saveQuestion(
+                pregunta.nombre,
+                pregunta.descripcion,
+                pregunta.id_test,
+                pregunta.tipo_respuestas,
+                pregunta.url_imagen
             );
+            
+        });
+        res.status(200).json({
+            msg: response
         });
     }catch(error){
-        return error;
-    };
-
+        res.status(500).json({
+            msg: error
+        })
+    }
 }
 
 module.exports = {
     testGet,
     testsGet,
-    testPost
+    testPost,
+    questionsPost
 }

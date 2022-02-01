@@ -58,7 +58,7 @@ const saveTest = (...testData)=>{
 
 const saveQuestion = (... questionData)=>{
     return new Promise( (resolve, reject)=>{
-        const query= "INSERT INTO preguntas (id_pregunta, nombre, descripcion, id_test, tipo_respuestas, url_imagen) VALUES (?,?,?,?,?,?)"
+        const query= "INSERT INTO preguntas ( nombre, descripcion, id_test, tipo_respuestas, url_imagen) VALUES (?,?,?,?,?)"
         mysqlConnection.query(query, questionData, (err, result)=>{
             if(err) reject(err);
             else resolve('Pregunta guardada correctamente')
