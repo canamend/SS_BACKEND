@@ -1,11 +1,11 @@
 const { getTests } = require("../database/queries/test.queries");
 
-// Verficar si ya existe una cuenta registrada con el usuario dado. Al crear una cuenta.
+// Verficar si ya existe un test con la palabra clave
 const existTest = async (keyword)=>{
     const tests = await getTests();
     console.log(tests);
     /*if(tests.) {
-        throw new Error('La cuenta YA existe');
+        throw new Error('El test YA existe');
     }*/
 }
 

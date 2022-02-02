@@ -64,7 +64,6 @@ const testPost = async (req=req, _res=_res)=>{
     try{
         const responseTest = await saveTest( id_test, nombre, keyword, enfoque );
         _res.json(responseTest)
-
         try{
             questions.forEach( async pregunta => {
                 const response = await saveQuestion(
@@ -77,38 +76,10 @@ const testPost = async (req=req, _res=_res)=>{
                 
             });
         }catch(error){
-            res.status(500).json({
-                msg: error
-            })
+            console.log("Error")
         }
-        res.status(200).json({
-            msg: response
-        });
     }catch(error){
         _res.status(500).json({
-            msg: error
-        })
-    }
-}
-
-const questionsPost = async (req=req, res=Res)=>{
-    const questions  = req.body; //req.body.respuestas
-    try{
-        questions.forEach( async pregunta => {
-            const response = await saveQuestion(
-                pregunta.nombre,
-                pregunta.descripcion,
-                pregunta.id_test,
-                pregunta.tipo_respuestas,
-                pregunta.url_imagen
-            );
-            
-        });
-        res.status(200).json({
-            msg: response
-        });
-    }catch(error){
-        res.status(500).json({
             msg: error
         })
     }
@@ -117,6 +88,5 @@ const questionsPost = async (req=req, res=Res)=>{
 module.exports = {
     testGet,
     testsGet,
-    testPost,
-    questionsPost
+    testPost
 }
